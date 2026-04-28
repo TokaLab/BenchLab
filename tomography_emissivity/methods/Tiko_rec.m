@@ -31,7 +31,9 @@ b=ones(size(k,2),1).*equi.geo.wall.inside(:);
 w=zeros(size(k',2),1); w(1:length(Bolo.prj))=Bolo.prj;
 
 for w1=1:5
-[b]=lsqr(k,w,1e-12,100,[],[],b);
+ 
+ 
+[b,flag]=lsqr(k,w,1e-8,500,[],[],b);
 b(b<0)=0;
 end
 

@@ -1,7 +1,7 @@
 %% Benchmarking - Tomography - v1 
 % Benchmarking description
 
-function db = Benchmarking_Tomography_example()
+function db = Benchmarking_Tomography_v1()
 
     %% set 1
     
@@ -10,7 +10,7 @@ function db = Benchmarking_Tomography_example()
     db{1}.config.rad_method = "phantom"; % bremsstrahlung / phantom /
     db{1}.config.rad_gen = "random"; % random / scenario /
     db{1}.config.rad_scenario = 1;
-    db{1}.config.rad_N = 10;
+    db{1}.config.rad_N = 90;
     db{1}.config.rad_seeds = 4;
     
     db{1}.config.equi_sim = 0; % utilizza solo un equilibrio
@@ -23,7 +23,7 @@ function db = Benchmarking_Tomography_example()
     db{2}.config.rad_method = "phantom"; % bremsstrahlung / phantom /
     db{2}.config.rad_gen = "random"; % random / scenario /
     db{2}.config.rad_scenario = 1;
-    db{2}.config.rad_N = 10;
+    db{2}.config.rad_N = 5;
     db{2}.config.rad_seeds = 4;
     
     db{2}.config.equi_sim = 0; % utilizza solo un equilibrio
@@ -36,7 +36,7 @@ function db = Benchmarking_Tomography_example()
     db{3}.config.rad_method = "phantom"; % bremsstrahlung / phantom /
     db{3}.config.rad_gen = "random"; % random / scenario /
     db{3}.config.rad_scenario = 1;
-    db{3}.config.rad_N = 10;
+    db{3}.config.rad_N = 5;
     db{3}.config.rad_seeds = 4;
     
     db{3}.config.equi_sim = 0; % utilizza solo un equilibrio
