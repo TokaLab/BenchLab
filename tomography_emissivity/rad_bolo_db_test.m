@@ -3,10 +3,10 @@ clear; clc; close all
 %% configuration
 
 folder = "datasets";
-filename = "test1";
+filename = "test_TCV";
 plt_opts=1;
 methods = ["Tiko";"ML"];
-box.R= [2.75 2.75 9.25 9.25]; box.Z= [-5.65 5.65 5.65 -5.65];
+%box.R= [2.75 2.75 9.25 9.25]; box.Z= [-5.65 5.65 5.65 -5.65];
 %% addpath
 
 addpath configurations\
@@ -30,25 +30,31 @@ for i1 = 1 : length(db)
     % extact data
     data = db{i1}.data_rad;
     equi = db{i1}.equi;
+    x1 = [equi.geo.R(1) equi.geo.R(end) equi.geo.R(end) equi.geo.R(1) equi.geo.R(1)];
+        y1 = [equi.geo.Z(1) equi.geo.Z(1) equi.geo.Z(end) equi.geo.Z(end) equi.geo.Z(1)];
+
 
     for i2 = 1 : size(data,1)
       
           equi.Rad = reshape(data(i2,:),size(equi.psi_n));
-        Bolo = Bolo.measure(equi);
+          Bolo = Bolo.measure(equi);
         
                             if plt_opts==1
                                  drawnow
                             tiledlayout(1,3)
                             clf
                             nexttile
-                            Phantom_plot = equi.Rad; Phantom_plot(~equi.geo.wall.inside)=NaN;
+                            
+                             Phantom_plot = equi.Rad;  % Phantom_plot(~equi.geo.wall.inside)=NaN;
+                            Psi_plot=equi.psi_n; Psi_plot(~equi.geo.wall.inside)=NaN;
                             hold off
-                            fill(box.R,box.Z,[0.75 0.75 0.75]);hold on
-                            fill(equi.geo.wall.R,equi.geo.wall.Z,[0.2422 0.1504 0.6603]);  hold on
-                            contourf(equi.geo.grid.Rg,equi.geo.grid.Zg,Phantom_plot,'LineStyle','none');
-                            contour(equi.geo.grid.Rg,equi.geo.grid.Zg,equi.psi_n,40,'k','LineWidth',0.5)
-                            contour(equi.geo.grid.Rg,equi.geo.grid.Zg,equi.psi_n,[-0.1 1],...
-                            'r','LineWidth',2)
+                           
+                           
+                            contourf(equi.geo.grid.Rg,equi.geo.grid.Zg,Phantom_plot,'LineStyle','none'); hold on
+                            patch([x1 equi.geo.wall.R], [y1 equi.geo.wall.Z], [0.75 0.75 0.75], "HandleVisibility","off","edgecolor", "none")
+                            contour(equi.geo.grid.Rg,equi.geo.grid.Zg,Psi_plot,10,'w','LineWidth',0.5)
+                            contour(equi.geo.grid.Rg,equi.geo.grid.Zg,equi.psi_n,[1 1],...
+                            'w','LineWidth',2)
                             plot(equi.geo.wall.R,equi.geo.wall.Z,'k','LineWidth',4); 
                             %plot(equi.LCFS.R,equi.LCFS.Z,'r--','LineWidth',4)
                             axis equal
@@ -81,12 +87,12 @@ for i1 = 1 : length(db)
                     R0_plot = R0; R0_plot(~equi.geo.wall.inside)=NaN;
                     nexttile
                     hold off
-                    fill(box.R,box.Z,[0.75 0.75 0.75]);hold on
-                    fill(equi.geo.wall.R,equi.geo.wall.Z,[0.2422 0.1504 0.6603]);  hold on
-                    contourf(equi.geo.grid.Rg,equi.geo.grid.Zg,R0_plot,'LineStyle','none');
-                    contour(equi.geo.grid.Rg,equi.geo.grid.Zg,equi.psi_n,40,'k','LineWidth',0.5)
+                  
+                   contourf(equi.geo.grid.Rg,equi.geo.grid.Zg,R0_plot,'LineStyle','none'); hold on
+                    patch([x1 equi.geo.wall.R], [y1 equi.geo.wall.Z], [0.75 0.75 0.75], "HandleVisibility","off","edgecolor", "none")
+                      contour(equi.geo.grid.Rg,equi.geo.grid.Zg,Psi_plot,10,'w','LineWidth',0.5)
                     contour(equi.geo.grid.Rg,equi.geo.grid.Zg,equi.psi_n,[-0.1 1],...
-                    'r','LineWidth',2)
+                    'w','LineWidth',2)
                     plot(equi.geo.wall.R,equi.geo.wall.Z,'k','LineWidth',4); 
                     %plot(equi.LCFS.R,equi.LCFS.Z,'r--','LineWidth',4)
                     axis equal
@@ -95,7 +101,7 @@ for i1 = 1 : length(db)
                     ylabel(C2,'[a.u]')
                     xlabel('R [m]')
                     ylabel('Z [m]')
-                    title('Phantom')     
+                    title(methods(m1))     
 
             end
             
