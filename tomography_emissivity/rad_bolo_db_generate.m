@@ -1,5 +1,10 @@
 clear; clc;
 
+%% addpath
+
+addpath configurations\
+addpath methods\
+
 %% Upload the dataset configuration
 db = Benchmarking_Tomography_v2();
 
